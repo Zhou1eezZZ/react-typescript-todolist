@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import ListCard from './components/ListCard/index';
 import InputBlock from './components/InputBlock/index';
+import { message } from 'antd';
 
 interface todoItem {
   content: string,
@@ -44,6 +45,10 @@ class App extends React.Component {
     })
   }
   addTodo = (todo: todoItem): void => {
+    if(this.state.todoLists.find(e => e.content.trim() === todo.content.trim())){
+      message.warning('已存在相同的todo项')
+      return
+    }
     let arr: todoItem[] = this.state.todoLists
     arr.push(todo)
     this.setState({
