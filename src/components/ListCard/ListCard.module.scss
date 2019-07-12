@@ -1,0 +1,56 @@
+.container{
+    width: 600px;
+    margin: 0 auto;
+}
+.todoListCard{
+    width: 600px;
+    margin: 20px auto;
+    text-align: left;
+    padding-left: 1em;
+    font-size: 16px;
+    border-left: 3px solid #d3d3d3;
+    font-weight: bold;
+    transition: all 1s ease-in;
+    p{
+        float: left;
+    }
+    i{
+        float: right;
+        font-size: 20px;
+        margin-right: 10px;
+    }
+}
+.doneList{
+    opacity: 0.5;
+    text-decoration: line-through;
+}
+.iconColor{
+    color: #1890ff;
+}
+
+//enter是入场前的刹那（点击按钮），appear指页面第一次加载前的一刹那（自动）
+.fade-enter, .fade-appear {
+    opacity: 0;
+}
+//enter-active指入场后到入场结束的过程，appear-active则是页面第一次加载自动执行
+.fade-enter-active, .fade-appear-active { 
+    opacity: 1;
+    transition: opacity 1s ease-in;
+}
+//入场动画执行完毕后，保持状态
+.fade-enter-done {
+    opacity: 1;
+}
+//同理，出场前的一刹那，以下就不详细解释了，一样的道理
+.fade-exit {
+    opacity: 1;
+}
+
+.fade-exit-active {
+    opacity: 0;
+    transition: opacity 1s ease-in;
+}
+
+.fade-exit-done {
+    opacity: 0;
+}
