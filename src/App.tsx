@@ -22,26 +22,24 @@ class App extends React.Component {
   }
   changeTodoStauts = (item: todoItem): void => {
     let arr = this.state.todoLists
-    arr.map((e, i) => {
+    arr.forEach((e, i) => {
       if (e.content === item.content) {
         arr[i].isDone = !arr[i].isDone
-        this.setState({
-          todoLists: arr
-        })
       }
-      return ''
+    })
+    this.setState({
+      todoLists: arr
     })
   }
   deleteTodo = (item: todoItem): void => {
     let arr = this.state.todoLists
-    arr.map((e, i) => {
+    arr.forEach((e, i) => {
       if (e.content === item.content) {
         arr.splice(i, 1)
-        this.setState({
-          todoLists: arr
-        })
       }
-      return ''
+    })
+    this.setState({
+      todoLists: arr
     })
   }
   addTodo = (todo: todoItem): void => {

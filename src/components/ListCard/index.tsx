@@ -1,37 +1,45 @@
 import * as React from 'react';
 import style from './ListCard.module.scss';
-import { Card, Divider, Icon ,Popconfirm } from 'antd';
+import { Card, Divider, Icon, Popconfirm } from 'antd';
 import { CSSTransition } from 'react-transition-group';
 
-interface todoItem{
+interface todoItem {
     content: string,
     isDone: Boolean
 }
 
 interface IProps {
     todoLists: todoItem[],
-    onCompleted:any,
-    onDelete:any
+    onCompleted: any,
+    onDelete: any
 }
 
-interface IState{
-    isDoneChange:Boolean
+interface IState {
+    isDoneChange: Boolean
 }
-class ListCard extends React.Component<IProps,IState> {
+class ListCard extends React.Component<IProps, IState> {
     state = {
-        isDoneChange :false
+        isDoneChange: false
     }
     render() {
+        let { isDoneChange } = this.state
+        let undoneList = this.props.todoLists.filter(e => !e.isDone)
+        let doneList = this.props.todoLists.filter(e => e.isDone)
         return (
             <div className={style['container']}>
-                <Divider><Icon type="calendar" theme="twoTone" /></Divider>
                 {
-                    this.props.todoLists.filter(e => !e.isDone).map((e, i) =>
+                    undoneList.length > 0 ?
+                        <Divider><Icon type="calendar" theme="twoTone" /></Divider>
+                        : null
+                }
+
+                {
+                    undoneList.map((e, i) =>
                         <CSSTransition
-                        in={this.state.isDoneChange}
-                        timeout={1000}
-                        classNames='fade'
-                        key={i}>
+                            in={isDoneChange}
+                            timeout={1000}
+                            classNames='fade'
+                            key={i}>
                             <Card className={style['todoListCard']} key={i}>
                                 <p>{e.content}</p>
                                 <Popconfirm
@@ -47,11 +55,16 @@ class ListCard extends React.Component<IProps,IState> {
                         </CSSTransition>
                     )
                 }
-                <Divider><Icon type="check" className={style['iconColor']} /></Divider>
                 {
-                    this.props.todoLists.filter(e => e.isDone).map((e, i) =>
+                    doneList.length > 0 ?
+                        <Divider><Icon type="check" className={style['iconColor']} /></Divider>
+                        : null
+                }
+
+                {
+                    doneList.map((e, i) =>
                         <CSSTransition
-                            in={!this.state.isDoneChange}
+                            in={!isDoneChange}
                             timeout={1000}
                             classNames='fade'
                             key={i}>
@@ -63,7 +76,7 @@ class ListCard extends React.Component<IProps,IState> {
                                     okText="Yes"
                                     cancelText="No"
                                 >
-                                    <Icon type="delete" theme="twoTone" twoToneColor="#eb2f96"  />
+                                    <Icon type="delete" theme="twoTone" twoToneColor="#eb2f96" />
                                 </Popconfirm>
                                 <Icon type="up-circle" theme="twoTone" onClick={() => this.toggleComplete(e)} />
                             </Card>
@@ -77,10 +90,10 @@ class ListCard extends React.Component<IProps,IState> {
     toggleComplete = (item: todoItem): void => {
         this.props.onCompleted(item)
         this.setState({
-            isDoneChange:!this.state.isDoneChange
+            isDoneChange: !this.state.isDoneChange
         })
     }
-    handleDeleteTodo = (item: todoItem):void => {
+    handleDeleteTodo = (item: todoItem): void => {
         this.props.onDelete(item)
     }
 }
