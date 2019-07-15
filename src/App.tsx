@@ -64,6 +64,10 @@ class App extends React.Component {
       this.setState({
         todoLists: JSON.parse(localList)
       })
+    } else {
+      this.setState({
+        todoLists: []
+      })
     }
   }
   render() {
